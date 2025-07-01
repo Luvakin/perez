@@ -1,0 +1,354 @@
+
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Manrope%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <title>Add Course Modal</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <style>
+      /* Custom scrollbar styling */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 2px;
+      }
+      
+      /* Modal animations */
+      .modal-overlay {
+        animation: fadeIn 0.3s ease-out;
+      }
+      
+      .modal-content {
+        animation: slideIn 0.3s ease-out;
+      }
+
+      /* For modern browsers */
+      .modal-content::-webkit-scrollbar {
+        display: none;
+      }
+      .modal-content {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;    /* Firefox */
+    }
+
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideIn {
+        from { 
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.9);
+        }
+        to { 
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex h-screen bg-gray-50 overflow-hidden" style='font-family: Manrope, "Noto Sans", sans-serif;'>
+      <!-- Sidebar -->
+      <div class="hidden lg:flex lg:w-64 xl:w-72 flex-col bg-gray-50 border-r border-gray-200">
+        <div class="flex flex-col justify-between h-full p-4">
+          <div class="flex flex-col gap-4">
+            <!-- User Profile -->
+            <div class="flex gap-3 items-center">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 flex-shrink-0"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqYixR4em8c75JykjQuXfRPYJLtOe8Gu1uddx-KUTVbVidf75rBdU7V9_Rq4Cpng3Wp79RhAvsKAWYIn8W8wBP-PCT9r7qmXTCFLg4lyJJqePE31kZUATqI5eTTfJdCSCljhCs4LlSUcZRFj-6OaFWX-mca2iHvd7JDInaT235NFRfeW6V4KOMSYlD2RcIT7de9hBvCm2eeo2Tz_cLg37HOO25T56DLkkA2rNSUE7_jv3ojXJaHgeI1dSmtQUoRkeKxkJ_E8kjBbc");'
+              ></div>
+              <h1 class="text-[#101418] text-base font-medium">Olivia</h1>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="flex flex-col gap-1">
+              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#eaedf1] cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M240,64V192a16,16,0,0,1-16,16H160a24,24,0,0,0-24,24,8,8,0,0,1-16,0,24,24,0,0,0-24-24H32a16,16,0,0,1-16-16V64A16,16,0,0,1,32,48H88a32,32,0,0,1,32,32v88a8,8,0,0,0,16,0V80a32,32,0,0,1,32-32h56A16,16,0,0,1,240,64Z"></path>
+                </svg>
+                <p class="text-[#101418] text-sm font-medium">My Courses</p>
+              </div>
+              
+              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer" id="addCourseBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+                </svg>
+                <button class="text-[#101418] text-sm font-medium">Add Course</button>
+              </div>
+              
+              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L196.69,120H104a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,221.66,122.34Z"></path>
+                </svg>
+                <p class="text-[#101418] text-sm font-medium">Logout</p>
+              </div>
+            </nav>
+          </div>
+          
+          <!-- Profile Link -->
+          <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+            </svg>
+            <p class="text-[#101418] text-sm font-medium">Profile</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden fixed top-4 left-4 z-50">
+        <button id="mobile-menu-btn" class="p-2 bg-white rounded-lg shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Content -->
+      <main class="flex-1 flex flex-col min-w-0 custom-scrollbar overflow-y-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center p-4 lg:p-6 pt-16 lg:pt-6">
+          <h1 class="text-[#101418] text-2xl lg:text-3xl font-bold">My Courses</h1>
+          
+        </div>
+
+        <!-- Course Tabs -->
+        <div class="border-b border-[#d4dbe2] px-4 lg:px-6">
+          <div class="flex gap-4 lg:gap-8 overflow-x-auto scrollbar-hide">
+           
+            
+            
+            
+            <a class="flex-shrink-0 border-b-[3px] border-b-[#dce7f3] text-[#101418] pb-3 pt-2" href="#">
+              <p class="text-sm font-bold">Introduction to Psychology</p>
+            </a>
+             {% for course in Courses %}
+            <a class="flex-shrink-0 border-b-[3px] border-b-transparent text-[#5c728a] pb-3 pt-2 hover:text-[#101418]" href="#">
+              <p class="text-sm font-bold">{{ course.course_name}}</p>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Course Content Section -->
+        <div class="flex-1 p-4 lg:p-6">
+          <h2 class="text-[#101418] text-xl lg:text-2xl font-bold mb-4">Course Content</h2>
+          
+          <!-- Desktop Table View -->
+          <div class="hidden md:block overflow-hidden rounded-xl border border-[#d4dbe2] bg-white mb-6">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-3 text-left text-[#101418] text-sm font-medium">Name</th>
+                  <th class="px-4 py-3 text-left text-[#101418] text-sm font-medium">Type</th>
+                  <th class="px-4 py-3 text-left text-[#101418] text-sm font-medium">Date</th>
+                  <th class="px-4 py-3 text-left text-[#5c728a] text-sm font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for content in coursecontent %}
+                <tr
+                  class="border-t border-t-[#d4dbe2] hover:bg-gray-50 cursor-pointer"
+                  data-href="{% url 'rag:llm' %}"
+                >
+                  <td class="px-4 py-4 text-[#101418] text-sm">{{ content.title }}</td>
+                  <td class="px-4 py-4 text-[#5c728a] text-sm">Notes</td>
+                  <td class="px-4 py-4 text-[#5c728a] text-sm">{{content.date}}</td>
+                  <td class="px-4 py-4">
+                    <span class="text-[#5c728a] hover:text-[#101418] text-sm font-bold">View</span>
+                  </td>
+                </tr> 
+                {% endfor %}
+                 <tr class="border-t border-t-[#d4dbe2] hover:bg-gray-50 cursor-pointer"
+                  data-href="{% url 'rag:llm' %}">
+                  <td class="px-4 py-4 text-[#101418] text-sm">Chapter 1 Summary</td>
+                  <td class="px-4 py-4 text-[#5c728a] text-sm">Summary</td>
+                  <td class="px-4 py-4 text-[#5c728a] text-sm">2024-08-16</td>
+                  <td class="px-4 py-4">
+                    <button class="text-[#5c728a] hover:text-[#101418] text-sm font-bold">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile Card View -->
+           {% for content in coursecontent %}
+           <a href="{% url 'rag:llm' %}" class="block md:hidden">
+          <div class="md:hidden space-y-3 mb-6 ">
+            <div class="bg-white rounded-lg border border-[#d4dbe2] p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-[#101418] font-medium">{{content.title}}</h3>
+                <button class="text-[#5c728a] text-sm font-bold">View</button>
+              </div>
+              <div class="flex justify-between text-sm text-[#5c728a]">
+                <span>Notes</span>
+                <span>2024-08-15</span>
+              </div>
+            </div>
+          </div>
+          </a>
+          {% endfor %}
+
+          <!-- Upload Section -->
+          <div class="bg-white rounded-xl border-2 border-dashed border-[#d4dbe2] p-6 lg:p-12 text-center">
+            <div class="max-w-md mx-auto">
+              <h3 class="text-[#101418] text-lg font-bold mb-2">Upload Course Content</h3>
+              <p class="text-[#101418] text-sm mb-6">Drag and drop files here, or browse</p>
+              <button class="bg-[#eaedf1] hover:bg-[#dce7f3] text-[#101418] px-6 py-2 rounded-xl text-sm font-bold transition-colors">
+                Browse Files
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Course Modal -->
+    <div id="addCourseModal" class="fixed inset-0 z-50 hidden">
+      <!-- Modal Overlay -->
+      <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto custom-scrollbar fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-6 border-b border-[#d4dbe2]">
+            <h2 class="text-[#101418] text-xl font-bold">Add New Course</h2>
+            <button id="closeModal" class="text-[#5c728a] hover:text-[#101418] p-1 rounded-lg hover:bg-gray-100 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <form id="addCourseForm" class="p-6 space-y-4" method="POST" action="{% url 'rag:add_courses' %}">
+            {% csrf_token %}
+            <!-- Course Name -->
+            <div>
+              <label for="courseName" class="block text-[#101418] text-sm font-medium mb-2">Course Name</label>
+              <input 
+                type="text" 
+                id="courseName" 
+                name="courseName"
+                class="w-full px-3 py-2 border border-[#d4dbe2] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dce7f3] focus:border-transparent text-[#101418] text-sm"
+                placeholder="Enter course name"
+                required
+              />
+            </div>
+
+            <!-- Course Code -->
+            <div>
+              <label for="courseCode" class="block text-[#101418] text-sm font-medium mb-2">Course Code</label>
+              <input 
+                type="text" 
+                id="courseCode" 
+                name="courseCode"
+                class="w-full px-3 py-2 border border-[#d4dbe2] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dce7f3] focus:border-transparent text-[#101418] text-sm"
+                placeholder="e.g., PSYC 101"
+                required
+              />
+            </div>
+
+            <!-- Instructor -->
+            <div>
+              <label for="instructor" class="block text-[#101418] text-sm font-medium mb-2">Instructor</label>
+              <input 
+                type="text" 
+                id="instructor" 
+                name="instructor"
+                class="w-full px-3 py-2 border border-[#d4dbe2] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dce7f3] focus:border-transparent text-[#101418] text-sm"
+                placeholder="Enter instructor name"
+                required
+              />
+            </div>
+            
+        
+
+            <!-- Description -->
+            <div>
+              <label for="description" class="block text-[#101418] text-sm font-medium mb-2">Description (Optional)</label>
+              <textarea 
+                id="description" 
+                name="description"
+                rows="3"
+                class="w-full px-3 py-2 border border-[#d4dbe2] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dce7f3] focus:border-transparent text-[#101418] text-sm resize-none"
+                placeholder="Brief description of the course"
+              ></textarea>
+            </div>
+          </form>
+
+          <!-- Modal Footer -->
+          <div class="flex gap-3 p-6 border-t border-[#d4dbe2]">
+            <button 
+              id="cancelBtn"
+              type="button" 
+              class="flex-1 px-4 py-2 border border-[#d4dbe2] text-[#101418] rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button 
+              id="createCourseBtn"
+              type="submit" 
+              form="addCourseForm"
+              class="flex-1 px-4 py-2 bg-[#eaedf1] hover:bg-[#dce7f3] text-[#101418] rounded-xl text-sm font-bold transition-colors"
+            >
+              Create Course
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var closeModal = document.getElementById('closeModal');
+      var addCourseBtn = document.getElementById('addCourseBtn');
+      var addCourseModal = document.getElementById('addCourseModal');
+      const modalOverlay = addCourseModal.querySelector(".modal-overlay");
+      const cancelBtn = document.getElementById("cancelBtn");
+
+      addCourseBtn.addEventListener('click', function() {
+        addCourseModal.classList.remove('hidden');
+      });
+
+      closeModal.addEventListener('click', function() {
+        addCourseModal.classList.add('hidden');
+      });
+      cancelBtn.addEventListener('click', function() {
+        addCourseModal.classList.add('hidden');
+      });
+
+    modalOverlay.addEventListener("click", function (event) {
+    const modalContent = addCourseModal.querySelector(".modal-content");
+    if (!modalContent.contains(event.target)) {
+      addCourseModal.classList.add("hidden");
+    }
+  });
+
+    document.querySelectorAll("tr[data-href]").forEach(row => {
+    row.addEventListener("click", () => {
+      window.location.href = row.dataset.href;
+    });
+  });
+
+
+    </script>
+    
+    
+  </body>
+</html>

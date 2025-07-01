@@ -1,0 +1,458 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Manrope%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <title>Course Chat - Introduction to Psychology</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      /* Custom scrollbar styling */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 2px;
+      }
+      
+      /* Chat animations */
+      .message-fade-in {
+        animation: fadeInUp 0.3s ease-out;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Typing indicator */
+      .typing-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      
+      .typing-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #5c728a;
+        animation: typing 1.4s infinite;
+      }
+      
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      
+      @keyframes typing {
+        0%, 60%, 100% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+        30% {
+          transform: translateY(-8px);
+          opacity: 1;
+        }
+      }
+      
+      /* Scroll to bottom button */
+      .scroll-to-bottom {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      
+      .scroll-to-bottom.hidden {
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex h-screen bg-gray-50 overflow-hidden" style='font-family: Manrope, "Noto Sans", sans-serif;'>
+      <!-- Sidebar -->
+      <div class="hidden lg:flex lg:w-64 xl:w-72 flex-col bg-gray-50 border-r border-gray-200">
+        <div class="flex flex-col justify-between h-full p-4">
+          <div class="flex flex-col gap-4">
+            <!-- User Profile -->
+            <div class="flex gap-3 items-center">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 flex-shrink-0"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqYixR4em8c75JykjQuXfRPYJLtOe8Gu1uddx-KUTVbVidf75rBdU7V9_Rq4Cpng3Wp79RhAvsKAWYIn8W8wBP-PCT9r7qmXTCFLg4lyJJqePE31kZUATqI5eTTfJdCSCljhCs4LlSUcZRFj-6OaFWX-mca2iHvd7JDInaT235NFRfeW6V4KOMSYlD2RcIT7de9hBvCm2eeo2Tz_cLg37HOO25T56DLkkA2rNSUE7_jv3ojXJaHgeI1dSmtQUoRkeKxkJ_E8kjBbc");'
+              ></div>
+              <h1 class="text-[#101418] text-base font-medium">Olivia</h1>
+            </div>
+            
+            <!-- Back to Courses -->
+            <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer" id="backToCourses">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
+              </svg>
+              <p class="text-[#101418] text-sm font-medium">Back to Courses</p>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="flex flex-col gap-1">
+              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#eaedf1]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
+                </svg>
+                <p class="text-[#101418] text-sm font-medium">Lecture 1 Notes</p>
+              </div>
+              
+              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
+                </svg>
+                <p class="text-[#101418] text-sm font-medium">Chapter 1 Summary</p>
+              </div>
+              
+              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
+                </svg>
+                <p class="text-[#101418] text-sm font-medium">Practice Problems</p>
+              </div>
+            </nav>
+            
+            <!-- New Chat Button -->
+            <button class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer border border-[#d4dbe2] bg-white" id="newChatBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+              </svg>
+              <p class="text-[#101418] text-sm font-medium">New Chat</p>
+            </button>
+          </div>
+          
+          <!-- Profile Link -->
+          <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+            </svg>
+            <p class="text-[#101418] text-sm font-medium">Profile</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden fixed top-4 left-4 z-50">
+        <button id="mobile-menu-btn" class="p-2 bg-white rounded-lg shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Chat Area -->
+      <main class="flex-1 flex flex-col min-w-0 bg-white">
+        <!-- Chat Header -->
+        <div class="flex items-center justify-between p-4 lg:p-6 pt-16 lg:pt-6 border-b border-[#d4dbe2] bg-white">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-[#eaedf1] rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-[#101418] text-lg font-bold">Lecture 1 Notes</h1>
+              <p class="text-[#5c728a] text-sm">Introduction to Psychology</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button class="p-2 text-[#5c728a] hover:text-[#101418] hover:bg-gray-100 rounded-lg transition-colors" id="clearChatBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div class="flex-1 flex flex-col min-h-0">
+          <!-- Messages Area -->
+          <div id="messagesContainer" class="flex-1 overflow-y-auto custom-scrollbar p-4 lg:p-6 space-y-6">
+            <!-- Welcome Message -->
+            <div class="flex items-start gap-3 message-fade-in">
+              <div class="w-8 h-8 bg-[#eaedf1] rounded-full flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+                </svg>
+              </div>
+              <div class="flex-1 max-w-3xl">
+                <div class="bg-gray-50 rounded-2xl rounded-tl-md p-4">
+                  <p class="text-[#101418] text-sm leading-relaxed">
+                    Hi! I'm your AI study assistant for Introduction to Psychology. I have access to your Lecture 1 Notes and can help you understand concepts, answer questions, and create study materials. What would you like to know about today's lecture?
+                  </p>
+                </div>
+                <p class="text-[#5c728a] text-xs mt-2">Just now</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scroll to Bottom Button -->
+          <div class="relative">
+            <button id="scrollToBottomBtn" class="scroll-to-bottom hidden absolute bottom-4 right-4 bg-white border border-[#d4dbe2] text-[#5c728a] hover:text-[#101418] hover:bg-gray-50 p-2 rounded-full shadow-lg transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="border-t border-[#d4dbe2] p-4 lg:p-6 bg-white">
+            <div class="max-w-4xl mx-auto">
+              <div class="flex items-end gap-3">
+                <div class="flex-1 relative">
+                  <textarea
+                    id="chatInput"
+                    placeholder="Ask me anything about your course content..."
+                    class="w-full min-h-[44px] max-h-32 px-4 py-3 pr-12 border border-[#d4dbe2] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#dce7f3] focus:border-transparent text-[#101418] text-sm resize-none custom-scrollbar"
+                    rows="1"
+                  ></textarea>
+                  <button
+                    id="sendBtn"
+                    class="absolute right-2 bottom-2 p-2 bg-[#eaedf1] hover:bg-[#dce7f3] disabled:bg-gray-100 disabled:text-gray-400 text-[#101418] rounded-lg transition-colors"
+                    disabled
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                      <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" transform="rotate(180 128 128)"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Suggested Questions -->
+              <div class="flex flex-wrap gap-2 mt-4" id="suggestedQuestions">
+                <button class="suggestion-btn px-3 py-2 bg-gray-50 hover:bg-gray-100 text-[#101418] text-sm rounded-lg border border-[#d4dbe2] transition-colors">
+                  What are the main concepts in this lecture?
+                </button>
+                <button class="suggestion-btn px-3 py-2 bg-gray-50 hover:bg-gray-100 text-[#101418] text-sm rounded-lg border border-[#d4dbe2] transition-colors">
+                  Create a summary of key points
+                </button>
+                <button class="suggestion-btn px-3 py-2 bg-gray-50 hover:bg-gray-100 text-[#101418] text-sm rounded-lg border border-[#d4dbe2] transition-colors">
+                  Generate practice questions
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // DOM Elements
+      const messagesContainer = document.getElementById('messagesContainer');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendBtn');
+      const scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
+      const suggestedQuestions = document.getElementById('suggestedQuestions');
+      const clearChatBtn = document.getElementById('clearChatBtn');
+      const newChatBtn = document.getElementById('newChatBtn');
+      const backToCourses = document.getElementById('backToCourses');
+
+      // Chat functionality
+      let isTyping = false;
+
+      // Auto-resize textarea
+      chatInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 128) + 'px';
+        
+        // Enable/disable send button
+        sendBtn.disabled = !this.value.trim();
+      });
+
+      // Send message on Enter (but allow Shift+Enter for new line)
+      chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      // Send button click
+      sendBtn.addEventListener('click', sendMessage);
+
+      // Suggested questions
+      suggestedQuestions.addEventListener('click', function(e) {
+        if (e.target.classList.contains('suggestion-btn')) {
+          chatInput.value = e.target.textContent;
+          chatInput.style.height = 'auto';
+          chatInput.style.height = Math.min(chatInput.scrollHeight, 128) + 'px';
+          sendBtn.disabled = false;
+          chatInput.focus();
+        }
+      });
+
+      // Clear chat
+      clearChatBtn.addEventListener('click', function() {
+        if (confirm('Are you sure you want to clear this conversation?')) {
+          clearChat();
+        }
+      });
+
+      // New chat
+      newChatBtn.addEventListener('click', function() {
+        clearChat();
+      });
+
+      // Back to courses
+      backToCourses.addEventListener('click', function() {
+        // In a real app, this would navigate back
+        alert('Navigating back to courses...');
+      });
+
+      // Scroll to bottom functionality
+      messagesContainer.addEventListener('scroll', function() {
+        const isNearBottom = this.scrollTop + this.clientHeight >= this.scrollHeight - 100;
+        scrollToBottomBtn.classList.toggle('hidden', isNearBottom);
+      });
+
+      scrollToBottomBtn.addEventListener('click', function() {
+        scrollToBottom();
+      });
+
+      // Functions
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message || isTyping) return;
+
+        // Add user message
+        addMessage(message, 'user');
+        
+        // Clear input
+        chatInput.value = '';
+        chatInput.style.height = 'auto';
+        sendBtn.disabled = true;
+        
+        // Hide suggested questions after first message
+        if (suggestedQuestions.children.length > 0) {
+          suggestedQuestions.style.display = 'none';
+        }
+        
+        // Simulate AI response
+        setTimeout(() => {
+          addTypingIndicator();
+          setTimeout(() => {
+            removeTypingIndicator();
+            addMessage(getAIResponse(message), 'ai');
+          }, 1500 + Math.random() * 1000);
+        }, 500);
+      }
+
+      function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex items-start gap-3 message-fade-in';
+        
+        const isUser = sender === 'user';
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.innerHTML = `
+          <div class="w-8 h-8 ${isUser ? 'bg-[#dce7f3]' : 'bg-[#eaedf1]'} rounded-full flex items-center justify-center flex-shrink-0">
+            ${isUser ? 
+              `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+              </svg>` :
+              `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+              </svg>`
+            }
+          </div>
+          <div class="flex-1 max-w-3xl">
+            <div class="bg-${isUser ? '[#f0f4f8]' : 'gray-50'} rounded-2xl ${isUser ? 'rounded-tr-md' : 'rounded-tl-md'} p-4">
+              <p class="text-[#101418] text-sm leading-relaxed">${text}</p>
+            </div>
+            <p class="text-[#5c728a] text-xs mt-2">${time}</p>
+          </div>
+        `;
+        
+        messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+      }
+
+      function addTypingIndicator() {
+        isTyping = true;
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'flex items-start gap-3 message-fade-in';
+        typingDiv.id = 'typing-indicator';
+        
+        typingDiv.innerHTML = `
+          <div class="w-8 h-8 bg-[#eaedf1] rounded-full flex items-center justify-center flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
+            </svg>
+          </div>
+          <div class="flex-1 max-w-3xl">
+            <div class="bg-gray-50 rounded-2xl rounded-tl-md p-4">
+              <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        messagesContainer.appendChild(typingDiv);
+        scrollToBottom();
+      }
+
+      function removeTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+          typingIndicator.remove();
+        }
+        isTyping = false;
+      }
+
+      function getAIResponse(userMessage) {
+        // Simple response simulation - in real app, this would call your AI backend
+        const responses = [
+          "Based on your Lecture 1 Notes, the main concepts covered include the definition of psychology, its historical development, and major schools of thought like behaviorism and cognitive psychology. Would you like me to elaborate on any of these topics?",
+          "That's a great question! Let me break down the key points from your lecture notes to help you understand this concept better.",
+          "I can help you create a study guide for this topic. Based on your lecture notes, here are the most important points to remember:",
+          "From your course materials, I can see this relates to the fundamental principles we discussed. Let me explain this in more detail."
+        ];
+        
+        return responses[Math.floor(Math.random() * responses.length)];
+      }
+
+      function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+
+      function clearChat() {
+        // Keep only the welcome message
+        const welcomeMessage = messagesContainer.firstElementChild;
+        messagesContainer.innerHTML = '';
+        messagesContainer.appendChild(welcomeMessage);
+        
+        // Show suggested questions again
+        suggestedQuestions.style.display = 'flex';
+        
+        scrollToBottom();
+      }
+
+      // Initialize
+      scrollToBottom();
+    </script>
+  </body>
+</html>
