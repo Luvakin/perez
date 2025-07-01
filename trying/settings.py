@@ -31,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '192.168.20.45',
+    'https://perez-8fdp.onrender.com/'
 ]
 
 
