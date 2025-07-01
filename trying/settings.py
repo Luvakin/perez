@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_w&j2_ty&_!0rr5+zea(u9p0@1ft0@nfa8o)4ba66mv*nm5j8h'
+# SECRET_KEY = 'django-insecure-_w&j2_ty&_!0rr5+zea(u9p0@1ft0@nfa8o)4ba66mv*nm5j8h'
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -121,7 +123,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 
