@@ -119,7 +119,7 @@
           </svg>
         </button>
       </div>
-
+     
       <!-- Main Content -->
       <main class="flex-1 flex flex-col min-w-0 custom-scrollbar overflow-y-auto">
         <!-- Header -->
@@ -134,12 +134,10 @@
            
             
             
+          
             
-            <a class="flex-shrink-0 border-b-[3px] border-b-[#dce7f3] text-[#101418] pb-3 pt-2" href="#">
-              <p class="text-sm font-bold">Introduction to Psychology</p>
-            </a>
              {% for course in Courses %}
-            <a class="flex-shrink-0 border-b-[3px] border-b-transparent text-[#5c728a] pb-3 pt-2 hover:text-[#101418]" href="#">
+            <a class="flex-shrink-0 border-b-[3px]{% if request.resolver_match.kwargs.slug == course.slug %} border-b-[#dce7f3] {% else %} border-b-transparent {% endif %} text-[#101418] pb-3 pt-2" href="{% url 'rag:index' course.slug %}">
               <p class="text-sm font-bold">{{ course.course_name}}</p>
             </a>
             {% endfor %}
@@ -175,15 +173,7 @@
                   </td>
                 </tr> 
                 {% endfor %}
-                 <tr class="border-t border-t-[#d4dbe2] hover:bg-gray-50 cursor-pointer"
-                  data-href="{% url 'rag:llm' %}">
-                  <td class="px-4 py-4 text-[#101418] text-sm">Chapter 1 Summary</td>
-                  <td class="px-4 py-4 text-[#5c728a] text-sm">Summary</td>
-                  <td class="px-4 py-4 text-[#5c728a] text-sm">2024-08-16</td>
-                  <td class="px-4 py-4">
-                    <button class="text-[#5c728a] hover:text-[#101418] text-sm font-bold">View</button>
-                  </td>
-                </tr>
+                 
               </tbody>
             </table>
           </div>
@@ -218,6 +208,8 @@
           </div>
         </div>
       </main>
+      
+      
     </div>
 
     <!-- Add Course Modal -->

@@ -1,20 +1,43 @@
 from django.shortcuts import render
 from .models import Courses, CourseContent
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CourseForm
+
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.http import Http404
 # Create your views here.
 
 
-def index(request):
-    Course_new = Courses.objects.all()
-    Course_content = CourseContent.objects.all()
+
+
+def redirect_to_first_course(request):
+    first_course = Courses.objects.exclude(slug="").order_by('id').first()
+    if first_course and first_course.slug:
+        return redirect('rag:index', slug=first_course.slug)
+    
+
+    return render(request, 'rag/no_course.html', {'error': 'No courses available.'})
+
+def index(request, slug):
+    try:
+        active_course = Courses.objects.get(slug=slug)
+        Courses_1 = Courses.objects.all()
+    except Courses.DoesNotExist:
+        raise Http404("Course not found.")
+        
+
+    all_courses = Courses.objects.exclude(slug="").order_by('id')
+    course_content = CourseContent.objects.filter(course=active_course)
+
     context = {
-        'Courses': Course_new,
-        'coursecontent': Course_content,
+        'active_course': active_course,
+        'all_courses': all_courses,
+        'coursecontent': course_content,
+        'Courses':Courses_1
     }
     return render(request, 'rag/index.html', context)
+
+
 
     
 
@@ -73,4 +96,4 @@ def create_course(request):
         messages.error(request, "Please fill in all required fields.")
         print("Failed to create course: Missing required fields.")
 
-    return redirect('rag:index')  # Redirect to the index page after creating the course
+    return redirect('rag:home_redirect')  # Redirect to the index page after creating the course
