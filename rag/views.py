@@ -41,7 +41,9 @@ def index(request, slug):
 
     
 
-def llm(request):
+def llm(request, slug):
+    
+
     return render(request, 'rag/llm.html', {})
 
 

@@ -138,7 +138,7 @@
             
              {% for course in Courses %}
             <a class="flex-shrink-0 border-b-[3px]{% if request.resolver_match.kwargs.slug == course.slug %} border-b-[#dce7f3] {% else %} border-b-transparent {% endif %} text-[#101418] pb-3 pt-2" href="{% url 'rag:index' course.slug %}">
-              <p class="text-sm font-bold">{{ course.course_name}}</p>
+              <p class="text-sm font-bold">{{ course.course_name|capfirst }}</p>
             </a>
             {% endfor %}
           </div>
@@ -172,7 +172,16 @@
                     <span class="text-[#5c728a] hover:text-[#101418] text-sm font-bold">View</span>
                   </td>
                 </tr> 
+
+                {% empty %}
+
+                <tr>
+                  <td colspan="4" class="px-4 py-4 text-center text-[#5c728a] text-sm">No content available</td>  
+                </tr>
+
                 {% endfor %}
+
+
                  
               </tbody>
             </table>
