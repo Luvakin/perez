@@ -146,7 +146,22 @@
 
         <!-- Course Content Section -->
         <div class="flex-1 p-4 lg:p-6">
-          <h2 class="text-[#101418] text-xl lg:text-2xl font-bold mb-4">Course Content</h2>
+          
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[#101418] text-xl lg:text-2xl font-bold">
+              Course Content
+            </h2>
+
+            <button class="fkex items-center gap-1 bg-[#eaedf1] hover:bg-[#d3d6db] text-sm font-medium px-4 py-1 rounded-xl">
+              <svg xmins="http://www.w3.org/2000/svg" width = "20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+                  Add
+              </svg>
+            </button>
+          </div>
+          
+
+          
           
           <!-- Desktop Table View -->
           <div class="hidden md:block overflow-hidden rounded-xl border border-[#d4dbe2] bg-white mb-6">
@@ -163,7 +178,7 @@
                 {% for content in coursecontent %}
                 <tr
                   class="border-t border-t-[#d4dbe2] hover:bg-gray-50 cursor-pointer"
-                  data-href="{% url 'rag:llm' %}"
+                  data-href="{% url 'rag:llm' content.course.slug content.slug %}"
                 >
                   <td class="px-4 py-4 text-[#101418] text-sm">{{ content.title }}</td>
                   <td class="px-4 py-4 text-[#5c728a] text-sm">Notes</td>
@@ -189,7 +204,7 @@
 
           <!-- Mobile Card View -->
            {% for content in coursecontent %}
-           <a href="{% url 'rag:llm' %}" class="block md:hidden">
+           <a href="{% url 'rag:llm' content.course.slug content.slug %}" class="block md:hidden">
           <div class="md:hidden space-y-3 mb-6 ">
             <div class="bg-white rounded-lg border border-[#d4dbe2] p-4">
               <div class="flex justify-between items-start mb-2">
@@ -205,7 +220,7 @@
           </a>
           {% endfor %}
 
-          
+
           <!-- Upload Section -->
           <div class="bg-white rounded-xl border-2 border-dashed border-[#d4dbe2] p-6 lg:p-12 text-center">
             <div class="max-w-md mx-auto">

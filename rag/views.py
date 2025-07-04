@@ -41,10 +41,27 @@ def index(request, slug):
 
     
 
-def llm(request, slug):
+def llm(request, slug1, slug2):
+    try:
+        active_course = Courses.objects.get(slug=slug1)
+        course_content = CourseContent.objects.get(slug=slug2, course=active_course)
+        
+        course_content_all = CourseContent.objects.filter(course=active_course)
+        
+
+    except (Courses.DoesNotExist, CourseContent.DoesNotExist):
+        raise Http404("Course or content not found.")
     
 
-    return render(request, 'rag/llm.html', {})
+    context = {
+        'active_course': active_course,
+        'course_content': course_content,
+        
+        'course_content_all': course_content_all,
+    }
+
+
+    return render(request, 'rag/llm.html', context)
 
 
 

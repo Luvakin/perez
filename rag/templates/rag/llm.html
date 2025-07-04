@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <style>
-      /* Custom scrollbar styling */
+      /* Custom scrollbar styling
       .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
       }
@@ -21,8 +21,14 @@
       .custom-scrollbar::-webkit-scrollbar-thumb {
         background: #cbd5e1;
         border-radius: 2px;
+      } */
+       #chatInput::-webkit-scrollbar {
+        display: none;
       }
-      
+      #chatInput {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;    /* Firefox */
+    }
       /* Chat animations */
       .message-fade-in {
         animation: fadeInUp 0.3s ease-out;
@@ -108,29 +114,26 @@
               <p class="text-[#101418] text-sm font-medium">Back to Courses</p>
             </div>
             
+
+            
             <!-- Navigation Menu -->
             <nav class="flex flex-col gap-1">
-              <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#eaedf1]">
+              {% for content in course_content_all %}
+              <a href="{% url 'rag:llm' content.course.slug content.slug  %}">
+              <div class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.resolver_match.kwargs.slug1 == content.course.slug and request.resolver_match.kwargs.slug2 == content.slug %} bg-[#eaedf1]   {% else %} hover:bg-gray-100 cursor-pointer {% endif %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
                   <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
                 </svg>
-                <p class="text-[#101418] text-sm font-medium">Lecture 1 Notes</p>
+                <p class="text-[#101418] text-sm font-medium">{{content.title|capfirst}}</p>
               </div>
+              </a>
+
+            
               
-              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
-                </svg>
-                <p class="text-[#101418] text-sm font-medium">Chapter 1 Summary</p>
-              </div>
               
-              <div class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
-                </svg>
-                <p class="text-[#101418] text-sm font-medium">Practice Problems</p>
-              </div>
+              {% endfor %}
             </nav>
+            
             
             <!-- New Chat Button -->
             <button class="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-xl cursor-pointer border border-[#d4dbe2] bg-white" id="newChatBtn">
@@ -170,10 +173,12 @@
                 <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H216V88H40ZM40,200V104H216v96Z"></path>
               </svg>
             </div>
+            
             <div>
-              <h1 class="text-[#101418] text-lg font-bold">Lecture 1 Notes</h1>
-              <p class="text-[#5c728a] text-sm">Introduction to Psychology</p>
+              <h1 class="text-[#101418] text-lg font-bold"> {{course_content.title|capfirst}}</h1>
+              <p class="text-[#5c728a] text-sm">{{course_content.course}}</p>
             </div>
+            
           </div>
           
           <div class="flex items-center gap-2">
